@@ -58,7 +58,6 @@ const GraficoBarras = ({ selectedWeek }) => {
     execute();
   }, []);
 
-  
   const semanaPasadaData = pedidos.filter(
     (pedido) => moment(pedido.attributes.fecha).week() === selectedWeek - 1
   );
@@ -68,12 +67,7 @@ const GraficoBarras = ({ selectedWeek }) => {
       (x) => moment(x.attributes.fecha).day() === day
     );
   };
-  const filtroxturno = (pedidosSemana, turno) => {
-    return pedidosSemana.filter(
-      (x) => moment(x.attributes.fecha).day() === turno
-    );
-  };
-
+  
   const turnos = {
     manana: [
       filtroxdia(
@@ -233,7 +227,8 @@ const GraficoBarras = ({ selectedWeek }) => {
       },
     ],
   };
-
+  console.log("turnos");
+  console.log(turnos);
   return <Bar options={options} data={graficoData} />;
 };
 
