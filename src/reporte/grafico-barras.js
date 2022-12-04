@@ -21,19 +21,6 @@ ChartJS.register(
   Legend
 );
 
-// const options = {
-//   responsive: true,
-//   plugins: {
-//     legend: {
-//       position: "top",
-//     },
-//     title: {
-//       display: true,
-//       text: "Clientes atendidos",
-//     },
-//   },
-// };
-
 const GraficoBarras = ({ graficoData, options }) => {
   return <Bar options={options} data={graficoData} />;
 };

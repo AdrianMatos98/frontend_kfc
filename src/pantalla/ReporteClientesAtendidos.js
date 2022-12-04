@@ -3,9 +3,15 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import GraficoBarras from "../reporte/grafico-barras";
 import es from "date-fns/locale/es";
 import moment from "moment";
+import axios from "axios";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import "./ReporteClientesAtendidos.scss";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
 registerLocale("es", es);
 
 const labels = [
@@ -26,6 +32,16 @@ const ReporteClientesAtendidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [valorGrafico, setValorGrafico] = useState("Montos");
 
+  //Filtro por tipo de venta - Inicio
+
+  const [tipo, setTipo] = useState("");
+
+  const handleChangeTipo = (event) => {
+    setTipo(event.target.value);
+  };
+  //Filtro por tipo de venta - Fin
+
+  console.log(selectedDate);
   useEffect(() => {
     const execute = async () => {
       const pedidosHttp = await axios.get("http://localhost:1337/api/pedidos");
@@ -36,9 +52,12 @@ const ReporteClientesAtendidos = () => {
     execute();
   }, []);
 
-  const semanaPasadaData = pedidos.filter(
-    (pedido) => moment(pedido.attributes.fecha).week() === selectedWeek - 1
-  );
+  console.log(tipo);
+  const semanaPasadaData = pedidos
+    .filter(
+      (pedido) => moment(pedido.attributes.fecha).week() === selectedWeek - 1
+    )
+    .filter((pedido) => (tipo === "" ? true : pedido.attributes.tipo === tipo));
 
   const filtroxdia = (pedidosSemana, day) => {
     return pedidosSemana.filter(
@@ -50,151 +69,143 @@ const ReporteClientesAtendidos = () => {
     manana: [
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         1
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         2
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         3
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         4
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         5
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         6
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "mañana"
+          (pedido) => pedido.attributes.turno === "apertura"
         ),
         0
       ),
     ],
 
-    tarde: [
+    intermedio: [
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         1
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         2
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         3
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         4
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         5
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         6
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "tarde"
+          (pedido) => pedido.attributes.turno === "intermedio"
         ),
         0
       ),
     ],
-    noche: [
+    cierre: [
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         1
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         2
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         3
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         4
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         5
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         6
       ),
       filtroxdia(
         semanaPasadaData.filter(
-          (pedido) => pedido.attributes.turno === "noche"
+          (pedido) => pedido.attributes.turno === "cierre"
         ),
         0
       ),
     ],
   };
 
-  console.log("turnos");
-  console.log(turnos);
-
-  console.log("montos");
-  console.log(
-    turnos.tarde.map((dia) => dia.reduce((a, b) => a + b?.attributes?.monto, 0))
-  );
-
   const graficoData = {
     labels,
     datasets: [
       {
-        label: "Turno mañana",
+        label: "Turno apertura",
         // data: turnos.manana.map((dia) => dia.length),
         data: turnos.manana.map((dia) =>
           valorGrafico === "Montos"
@@ -204,9 +215,9 @@ const ReporteClientesAtendidos = () => {
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "Turno tarde",
-        // data: turnos.tarde.map((dia) => dia.length),
-        data: turnos.tarde.map((dia) =>
+        label: "Turno intermedio",
+        // data: turnos.intermedio.map((dia) => dia.length),
+        data: turnos.intermedio.map((dia) =>
           valorGrafico === "Montos"
             ? dia.reduce((a, b) => a + b.attributes.monto, 0)
             : dia.length
@@ -214,8 +225,8 @@ const ReporteClientesAtendidos = () => {
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
-        label: "Turno noche",
-        data: turnos.noche.map((dia) =>
+        label: "Turno cierre",
+        data: turnos.cierre.map((dia) =>
           valorGrafico === "Montos"
             ? dia.reduce((a, b) => a + b?.attributes?.monto, 0)
             : dia.length
@@ -237,7 +248,7 @@ const ReporteClientesAtendidos = () => {
       },
       title: {
         display: true,
-        text: `Clientes atendidos - ${valorGrafico}`,
+        text: `Clientes atendidos - ${tipo} - ${valorGrafico}`,
       },
     },
   };
@@ -248,18 +259,37 @@ const ReporteClientesAtendidos = () => {
         <h3>Reporte de clientes atendidos</h3>
       </div>
       <div style={{ height: "100px" }} className="filtros-container">
-        <div>
-          <DatePicker
-            locale={es}
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-          />
-        </div>
-        <div>
-          <button onClick={toggleValorGrafico}>
+        <Stack spacing={2} direction="row">
+          <div>
+            <DatePicker
+              locale={es}
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+            />
+          </div>
+
+          <Button variant="contained" size="small" onClick={toggleValorGrafico}>
             {valorGrafico === "Montos" ? "Mostrar cantidad" : "Mostrar montos"}
-          </button>
-        </div>
+          </Button>
+
+          <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+            <InputLabel id="demo-select-small">Tipo de venta</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={tipo}
+              label="Tipo de venta"
+              onChange={handleChangeTipo}
+            >
+              <MenuItem value="">
+                <em>Todos</em>
+              </MenuItem>
+              <MenuItem value={`local`}>Local</MenuItem>
+              <MenuItem value={`automovil`}>Automovil</MenuItem>
+              <MenuItem value={`delivery`}>Delivery</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
       </div>
       <div className="grafico_container">
         <div className="grafico_70">
