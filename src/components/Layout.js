@@ -6,6 +6,7 @@ import {
   MenuItem,
   useProSidebar,
 } from "react-pro-sidebar";
+import { Link, Outlet } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const Layout = ({ children }) => {
@@ -16,13 +17,19 @@ const Layout = ({ children }) => {
       <Sidebar style={{ width: "10%" }}>
         <Menu>
           <SubMenu label="Ventas">
-            <MenuItem> Clientes atendidos</MenuItem>
+            <MenuItem routerLink={<Link to={`./clientes-atendidos`} />}>
+              Clientes atendidos
+            </MenuItem>
+            <MenuItem routerLink={<Link to={`./ticket-promedio`} />}>
+              Ticket promedio
+            </MenuItem>
           </SubMenu>
         </Menu>
       </Sidebar>
       <main style={{ width: "90%" }}>
         {/* <button onClick={() => collapseSidebar()}>Collapse</button> */}
         {children}
+        <Outlet />
       </main>
     </div>
   );

@@ -25,9 +25,12 @@ const labels = [
 ];
 
 const ReporteClientesAtendidos = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState({
+    date: new Date(),
+    newDate: true,
+  });
 
-  const selectedWeek = moment(selectedDate).week();
+  const selectedWeek = moment(selectedDate.date).week();
 
   const [pedidos, setPedidos] = useState([]);
   const [valorGrafico, setValorGrafico] = useState("Montos");
@@ -55,7 +58,9 @@ const ReporteClientesAtendidos = () => {
   console.log(tipo);
   const semanaPasadaData = pedidos
     .filter(
-      (pedido) => moment(pedido.attributes.fecha).week() === selectedWeek - 1
+      (pedido) =>
+        moment(pedido.attributes.fecha).week() ===
+        (selectedDate.newDate === true ? selectedWeek - 1 : selectedWeek)
     )
     .filter((pedido) => (tipo === "" ? true : pedido.attributes.tipo === tipo));
 
@@ -64,6 +69,7 @@ const ReporteClientesAtendidos = () => {
       (x) => moment(x.attributes.fecha).day() === day
     );
   };
+  console.log(selectedWeek);
 
   const turnos = {
     manana: [
@@ -248,7 +254,7 @@ const ReporteClientesAtendidos = () => {
       },
       title: {
         display: true,
-        text: `Clientes atendidos - ${tipo} - ${valorGrafico}`,
+        text: `Clientes atendidos - ${tipo ? tipo : "todos"} - ${valorGrafico}`,
       },
     },
   };
@@ -263,8 +269,10 @@ const ReporteClientesAtendidos = () => {
           <div>
             <DatePicker
               locale={es}
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
+              selected={selectedDate.date}
+              onChange={(date) =>
+                setSelectedDate({ date: date, newDate: false })
+              }
             />
           </div>
 
