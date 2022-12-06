@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import GraficoBarras from "../reporte/grafico-barras";
 import es from "date-fns/locale/es";
 import moment from "moment";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-/////aaaaa
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,7 +11,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-/////sasasass
 
 import "./ReporteClientesAtendidos.scss";
 import "react-datepicker/dist/react-datepicker.css";
